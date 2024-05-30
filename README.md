@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center">✨ dotfiles ✨</h3>
+  <h3 align="center">✨ dotctl ✨</h3>
   <p align="center"><i>easily manage your dotfiles!</i></p>
 </p>
 
