@@ -1,64 +1,58 @@
 <p align="center">
+  <a href="https://github.com/enbytedev/dotctl"><img src="https://raw.githubusercontent.com/enbytedev/dotctl/main/ICON.png" width="250" height="250" /></a>
   <h3 align="center">✨ dotctl ✨</h3>
   <p align="center"><i>easily manage your dotfiles!</i></p>
 </p>
 
-<hr>
-This tool requires stow and jq. On Arch, they can be installed with Pacman:
+## Installation
 
-```shell
-sudo pacman -S stow jq
-```
-
-To install system-wide, you can use the provided script to generate a wrapper.
+To install system-wide, you can use the provided script or PKGBUILD file. If you plan to install from the install.sh script, please ensure you have all required packages installed.
 *(Remember, NEVER run scripts if you haven't checked what they do!)*
 
+**install.sh**
 ```shell
-chmod +x make-dotctl.sh
-./make-dotctl.sh
+chmod +x ./install.sh
+./install.sh
 ```
 
-With dotctl installed and configured, its time to sync your dotfiles!:
-
+**PKGBUILD**
 ```shell
-dotctl --sync
+makepkg -si
 ```
 
-These files will be placed in your "intermediate" folder with any applicable patches applied. This folder can be accessed by running with the --intermediate-dir or -id flag:
+Either method will install the collection of scripts required to run dotctl. These scripts are located in /usr/local/share/dotctl by default.
 
-```shell
-dotctl --intermediate-dir
-```
+## Commands and Flags
 
-Likewise, the base directory can be accessed by the --base-dir or -bd flag:
+| Command              | Flags                            | Description                                                                                   |
+|----------------------|----------------------------------|-----------------------------------------------------------------------------------------------|
+| `--help`             | `-h`                             | Display the help menu                                                                         |
+| `--sync`             | `-s`                             | Sync dotfiles from remote (if applicable) to base, and processed to intermediate                                                                      |
+| `--gen-changes`      | `-g`                             | Generate changes that can be imported/exported seperate from the base dotfiles                                                               |
+| `--config`           | `-c`                             | Open config.json in the system editor (falls back to nano)                                |
+| `--dir`              | `-d ` | Open ~/.dotctl directory in the file manager                                                  |
+|                      | `-d i`, `-d intermediate`              | Open the intermediate directory                                                               |
+|                      | `-d b`, `-d base`                      | Open the base directory                                                                       |
+|                      | `-d c`, `-d changes`                   | Open the changes directory                                                                    |
+| `--export`           | `-e [arg]`                       | Export changes as tarball with an optional argument for file name (defaults to 'export')                |
+| `--import`           | `-i [path]`                      | Import changes as tarball from the specified path                                                       |
+| `--flush`            |                                  | Flush changes; delete and recreate changes directory                                       |
+| `--merge`            |                                  | Merge your intermediate into base overwrite base with intermediate                                            |
+| `--git-init`         |                                  | Initialize or clone a repository in the base directory                   |
 
-```shell
-dotctl --base-dir
-```
+## Configuration
 
-Any changes made in the intermediate directory will be overwritten by the sync command. This is to avoid keeping any modifications that are undesirable. To save modifications separately (or privately if tokens are involved,) utilize patches. Running with the --gen-patches or -p flag will generate patches based on the differences between the base folder and the intermediate folder.
+You can specify what to load and where using JSON. An example config file is shown below:
 
-```shell
-dotctl --gen-patches
-```
-
-To access the patch folder, run with --patches-dir or -pd.
-
-```shell
-dotctl --patches-dir
-```
-
-Here you will find all of the changes made to the intermediary folder as patch files. These can be backed up seperately.
-
-All modification to these dotfiles should be done through the generated system folders. Do not delete these folders.
-
-You can specify what to load and where using JSON. An example is shown below:
 
 ```json
 {
-    "home": "/home/tommy/",
-    "dot-config": "/home/tommy/.config/",
-    "etc": "/etc/"
+    "format_version": "1b",
+    "structure": {
+        "home": "/home/tommy/",
+        "dot-config": "/home/tommy/.config/",
+        "etc": "/etc/"
+    }
 }
 ```
 
@@ -83,3 +77,5 @@ base
 │       ├── watch.sh
 │       └── wsmenu.sh
 ```
+
+Additionally, a value called format_version is stored so that any future updates carry minimal risk of data loss.
