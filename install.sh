@@ -3,7 +3,7 @@
 # Set format version
 FORMAT_VERSION="1b"
 # Read the version from the VERSION file
-VERSION=$(cat "$SCRIPT_DIR/VERSION")
+VERSION=$(cat "./VERSION")
 
 # Define ANSI escape codes for bright blue color and bold text
 BLUE_BOLD='\033[1;34m'
