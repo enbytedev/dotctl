@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Set version
-VERSION="1.0.0-rc.2"
+# Set format version
 FORMAT_VERSION="1b"
+# Read the version from the VERSION file
+VERSION=$(cat "$SCRIPT_DIR/VERSION")
 
 # Define ANSI escape codes for bright blue color and bold text
 BLUE_BOLD='\033[1;34m'
