@@ -34,7 +34,7 @@ sudo mkdir -p /usr/local/share/dotctl
 mkdir -p $HOME/.dotctl
 mkdir -p $HOME/.dotctl/base
 mkdir -p $HOME/.dotctl/intermediate
-mkdir -p $HOME/.dotctl/patches
+mkdir -p $HOME/.dotctl/changes
 
 # Copy all scripts to /usr/local/share/dotctl
 print_gray "Copying scripts..."
