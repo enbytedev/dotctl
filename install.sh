@@ -4,6 +4,8 @@
 FORMAT_VERSION="1b"
 # Read the version from the VERSION file
 VERSION=$(cat "./VERSION")
+# Source the migration handler.
+"./format_migrator.sh"
 
 # Define ANSI escape codes for bright blue color and bold text
 BLUE_BOLD='\033[1;34m'
