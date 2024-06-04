@@ -52,9 +52,9 @@ merge_all() {
 merge_target() {
     local target=$1
 
-    # Check if the target exists in the intermediate directory
-    if [ ! -e "$INTERMEDIATE_DIR/$target" ]; then
-        print_red "Error: $INTERMEDIATE_DIR/$target does not exist."
+    # Check if the target exists in the intermediate directory or is listed for deletion
+    if [ ! -e "$INTERMEDIATE_DIR/$target" ] && ! grep -q "^$target\$" "$DELETIONS_FILE"; then
+        print_red "Error: $INTERMEDIATE_DIR/$target does not exist and is not listed for deletion."
         exit 1
     fi
 
@@ -68,11 +68,11 @@ merge_target() {
         exit 1
     fi
 
-    # Overwrite the specific target from intermediate to base
+    # Overwrite the specific target from intermediate to base if it exists
     print_blue "Merging $target..."
     if [ -d "$INTERMEDIATE_DIR/$target" ]; then
-        cp -r "$INTERMEDIATE_DIR/$target/"* "$BASE_DIR/$target"
-    else
+        cp -r "$INTERMEDIATE_DIR/$target/"* "$BASE_DIR/$target/"
+    elif [ -f "$INTERMEDIATE_DIR/$target" ]; then
         cp "$INTERMEDIATE_DIR/$target" "$BASE_DIR/$target"
     fi
 
@@ -122,4 +122,9 @@ else
     merge_all
 fi
 
-print_dark_gray "Please run --gen-changes to generate changes that reflect the new base."
+if [ -n "$TARGET" ]; then
+    LOG_TARGET=" $1"
+else
+    LOG_TARGET=""
+fi
+print_dark_gray "Please run \"--flush$LOG_TARGET\" and \"--gen-changes\" to generate changes that reflect the new base."

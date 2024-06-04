@@ -31,8 +31,8 @@ show_help() {
     print_gray "  --dir, -d [i|intermediate|b|base|c|changes]  Open specified directory in the file manager"
     print_gray "  --export, -e [arg]           Export changes as tarball with an optional argument for file name (defaults to 'export')"
     print_gray "  --import, -i [path]          Import changes as tarball from the specified path"
-    print_gray "  --flush                      Flush changes; delete and recreate changes directory"
-    print_gray "  --merge [target]             Merge your intermediate into base or specific target, overwrite base with intermediate"
+    print_gray "  --flush [target]             Flush all or some changes; delete and recreate changes directory"
+    print_gray "  --merge [target]             Merge all or some intermediate into base, overwrite base with intermediate"
     print_gray "  --git-init                   Initialize or clone a repository in the base directory"
 }
 
@@ -122,8 +122,9 @@ case "$1" in
         fi
         ;;
     --flush)
+        shift
         if [ -f "$FLUSH_CHANGES_SCRIPT_PATH" ]; then
-            "$FLUSH_CHANGES_SCRIPT_PATH"
+            "$FLUSH_CHANGES_SCRIPT_PATH" "$1"
         else
             print_gray "Error: $FLUSH_CHANGES_SCRIPT_PATH does not exist."
             exit 1
