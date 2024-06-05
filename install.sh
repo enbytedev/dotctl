@@ -50,18 +50,8 @@ sudo chmod +x ./*.sh
 # Check if config.json exists, if not, create it with the template
 print_gray "Checking for config.json..."
 if [ ! -f "$CONFIG_PATH" ]; then
-    cat <<EOL > "$CONFIG_PATH"
-{
-    "format_version": "$FORMAT_VERSION",
-    "structure": {
-        "home": "/home/tommy/",
-        "dot-local": "/home/tommy/.local/",
-        "dot-config": "/home/tommy/.config/",
-        "etc": "/etc/",
-        "usr": "/usr/"
-    }
-}
-EOL
+    USERNAME=$(whoami)
+    sed "s/{{USERNAME}}/$USERNAME/" example-config.json > "$CONFIG_PATH"
     print_gray "Created $CONFIG_PATH with default template."
 fi
 
