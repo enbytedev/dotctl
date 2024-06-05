@@ -32,14 +32,14 @@ EOF
 initialize_local_repo() {
     cd $BASE_DIR
     if [ -d ".git" ]; then
-        print_gray "A local Git repository already exists in $BASE_DIR."
+        print_red "A local Git repository already exists in $BASE_DIR."
     else
         git init
         print_green "Initialized a local Git repository in $BASE_DIR."
         echo "$readme_template" > README.md
         git add README.md
         git commit -m "Add README.md"
-        print_green "Created README.md and committed to local repository."
+        print_debug "Created README.md and committed to local repository."
     fi
 }
 
@@ -58,7 +58,7 @@ clone_remote_repo() {
                     break
                     ;;
                 [n]* | "" )
-                    print_blue "Operation cancelled."
+                    print_gray "Operation cancelled."
                     exit 0
                     ;;
                 * )

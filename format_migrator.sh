@@ -18,7 +18,9 @@ backup_file() {
 # Function to update config.json for format_version 1b to 1c
 update_1b_to_1c() {
     local generateGitTreeForReadme="\"generateGitTreeForReadme\": true"
+    local enableDebugLogging="\"enableDebugLogging\": true"
     jq ". + {${generateGitTreeForReadme}, \"format_version\": \"1c\"}" "$CONFIG_PATH" > "$CONFIG_PATH.tmp" && mv "$CONFIG_PATH.tmp" "$CONFIG_PATH"
+    jq ". + {${enableDebugLogging}, \"format_version\": \"1c\"}" "$CONFIG_PATH" > "$CONFIG_PATH.tmp" && mv "$CONFIG_PATH.tmp" "$CONFIG_PATH"
     echo "Updated dotctl to format_version 1c."
 }
 

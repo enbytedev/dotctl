@@ -30,7 +30,7 @@ fi
 
 # Check if the tar file exists
 if [ ! -f "$FULL_PATH" ]; then
-  echo "Error: $FULL_PATH does not exist."
+  print_red "Error: $FULL_PATH does not exist."
   exit 1
 fi
 

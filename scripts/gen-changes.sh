@@ -21,15 +21,15 @@ $PACKAGE_CHANGES_SCRIPT old-changes.tar
 mkdir -p $CHANGES_DIR
 
 # Clean up old patches, additions, and deletions
-print_dark_gray "Regenerating fresh patches directory..."
+print_debug "Regenerating fresh patches directory..."
 rm -rf $PATCHES_DIR
 mkdir -p $PATCHES_DIR
 
-print_dark_gray "Regenerating fresh additions directory..."
+print_debug "Regenerating fresh additions directory..."
 rm -rf $ADDITIONS_DIR
 mkdir -p $ADDITIONS_DIR
 
-print_dark_gray "Removing stale deletions file..."
+print_debug "Removing stale deletions file..."
 rm -f $DELETIONS_FILE
 
 # Generate patch for each modified file
@@ -52,7 +52,7 @@ generate_patch() {
 export -f generate_patch
 
 # Identify additions and copy to additions directory
-print_blue "Identifying additions..."
+print_gray "Identifying additions..."
 find $INTERMEDIATE_DIR -type f | while read -r intermediate_file; do
     # Skip files in the .git directory
     if [[ "$intermediate_file" == *"/.git/"* ]]; then
@@ -74,7 +74,7 @@ find $INTERMEDIATE_DIR -type f | while read -r intermediate_file; do
 done
 
 # Identify changes and generate patches
-print_blue "Identifying changes..."
+print_gray "Identifying changes..."
 find $INTERMEDIATE_DIR -type f | while read -r intermediate_file; do
     # Skip files in the .git directory
     if [[ "$intermediate_file" == *"/.git/"* ]]; then
@@ -92,7 +92,7 @@ find $INTERMEDIATE_DIR -type f | while read -r intermediate_file; do
 done
 
 # Identify deletions
-print_blue "Identifying deletions..."
+print_gray "Identifying deletions..."
 find $BASE_DIR -type f | while read -r base_file; do
     # Skip files in the .git directory
     if [[ "$base_file" == *"/.git/"* ]]; then

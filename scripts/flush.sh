@@ -34,7 +34,7 @@ flush_target() {
   if [ -e "$DELETIONS_FILE" ]; then
     if grep -q "$relative_path" "$DELETIONS_FILE"; then
       sed -i "\|$relative_path|d" "$DELETIONS_FILE"
-      print_gray "Flushed deletion: $relative_path from $DELETIONS_FILE"
+      print_gray "Flushed deletion: $relative_path"
       return
     fi
   fi
@@ -58,7 +58,7 @@ fi
 confirm=${confirm,,}  # tolower
 
 if [[ "$confirm" != "y" ]]; then
-  echo "Operation cancelled."
+  print_gray "Operation cancelled."
   exit 0
 fi
 
